@@ -8,12 +8,17 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Navbar from '../../components/navbar/navbar';
 import Box from '@mui/material/Box';
 import { InputLabel } from '@mui/material';
 import Chat from '../chat/Chat';
 import Button from '@mui/material/Button';
+import { DateField } from '@mui/x-date-pickers/DateField';
+
 interface AccordionProps {
   label: string;
 }
@@ -30,11 +35,26 @@ function Accordeon() {
     setSelectValue1(e.target.value as string);
   };
 
-  const [inputValue2, setInputValue2] = useState<string>('');
+  const [nombre, setNombre] = useState<string>('');
+  const [seudonimo, setSeudonimo] = useState<string>('');
+  const [padre, setPadre] = useState<string>('');
+  const [fechaNacimiento, setFechaNacimiento] = useState<Date | null>(null);
   const [selectValue2, setSelectValue2] = useState<string>('');
 
-  const handleInputChange2 = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue2(e.target.value);
+  const handleNombre = (e: ChangeEvent<HTMLInputElement>) => {
+    setNombre(e.target.value);
+  };
+
+  const handleSeudonimo = (e: ChangeEvent<HTMLInputElement>) => {
+    setSeudonimo(e.target.value);
+  };
+
+  const handlePadre = (e: ChangeEvent<HTMLInputElement>) => {
+    setPadre(e.target.value);
+  };
+
+  const handleFechaNacimientoChange = (date: Date | null) => {
+    setFechaNacimiento(date);
   };
 
   const handleSelectChange2 = (e: ChangeEvent<{ value: unknown }>) => {
@@ -52,14 +72,37 @@ function Accordeon() {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Accordion 1</Typography>
+              <Typography>Informacion personal</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <TextField
-                label="Input 1"
-                value={inputValue1}
-                onChange={handleInputChange1}
+                label="nombre"
+                value={nombre}
+                onChange={handleNombre}
               />
+              <TextField
+                label="seudonimo"
+                value={seudonimo}
+                onChange={handleSeudonimo}
+              />       
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={['DateField']}>
+                  <DateField label="Fecha de nacimiento" format="DD-MM-YYYY" />
+                </DemoContainer>
+              </LocalizationProvider>
+
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={['DateField']}>
+                  <DateField label="Fecha de fallecimiento" />
+                </DemoContainer>
+              </LocalizationProvider>
+
+              <TextField
+                label="padre"
+                value={padre}
+                onChange={handlePadre}
+              /> 
+                  
               <InputLabel htmlFor="select-1">Select 1</InputLabel>
               <Select
                 labelId="select-1"
@@ -88,13 +131,18 @@ function Accordeon() {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography>Accordion 2</Typography>
+              <Typography>Actividades</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <TextField
-                label="Input 2"
-                value={inputValue2}
-                onChange={handleInputChange2}
+                label="Nombre"
+                value={nombre}
+                onChange={handleNombre}
+              />
+              <TextField
+                label="Seudonimo"
+                value={inputValue1}
+                onChange={handleNombre}
               />
               <Select
                 labelId="select-2"
@@ -117,9 +165,16 @@ function Accordeon() {
             </AccordionDetails>
           </Accordion>
         </Box>
-        <Button>Enviar</Button>
-        <Typography>Respuesta: </Typography>
-        <Chat></Chat>
+        <Box sx={{width:"100%", heigh:"60%", display:"grid", marginTop:"300px"}}>
+        <Button sx={{width:"80px", margin:"auto", backgroundColor:"green", color:"white",
+      "&::hover":{backgroundColor:"green"}}}>Enviar</Button>
+        <Box sx={{width:"max-content", margin:"auto"}}>
+          <Typography>Respuesta: </Typography>
+          <Box sx={{overflow:"scroll", height:"200px"}}>
+            <Chat></Chat>
+          </Box>
+        </Box>
+        </Box>
       </div>
     </Box>
   );

@@ -13,7 +13,7 @@ interface ChatBubbleProps {
 const StyledBubble = styled(Paper)(({ theme, isResponse }: { theme: any; isResponse?: boolean }) => ({
   padding: theme.spacing(1),
   borderRadius: 10,
-  width:"60%",
+  width:"60vw",
   margin:"auto",
   wordWrap: 'break-word',
   marginBottom: theme.spacing(1),
@@ -34,6 +34,10 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ message, isResponse = false }) 
 const Chat: React.FC = () => {
   return (
     <div>
+      <ChatBubble message="Hola, ¿cómo estás?" />
+      <ChatBubble message="¡Hola! Estoy bien, ¿y tú?" isResponse />
+      <ChatBubble message="Hola, ¿cómo estás?" />
+      <ChatBubble message="¡Hola! Estoy bien, ¿y tú?" isResponse />
       <ChatBubble message="Hola, ¿cómo estás?" />
       <ChatBubble message="¡Hola! Estoy bien, ¿y tú?" isResponse />
       {/* Agrega más burbujas de chat según sea necesario */}
